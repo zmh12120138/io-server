@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>抄表管理界面</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        window.onload=function(){
+//定时器每秒调用一次fnDate()
+            setInterval(function(){
+                fnDate();
+            },1000);
+        }
+        //js 获取当前时间
+        function fnDate(){
+            var oDiv=document.getElementById("sendtime");
+            var date=new Date();
+            var year=date.getFullYear();//当前年份
+            var month=date.getMonth();//当前月份
+            var data=date.getDate();//天
+            var hours=date.getHours();//小时
+            var minute=date.getMinutes();//分
+            var second=date.getSeconds();//秒
+            var time=year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
+            oDiv.value=time;
+        }
+        //补位 当某个字段不是两位数时补0
+        function fnW(str){
+            var num;
+            str>10?num=str:num="0"+str;
+            return num;
+        }
+    </script>
+    <script>
+        var command=io.connect("localhost:1338");
+        function meterReading() {
+            var meterid = document.getElementById('meterid').value;
+            var code = document.getElementById('code').value;
+            var sendby = document.getElementById('sendby').value;
+            var type = document.getElementById('type').value;
+            var remark = document.getElementById('remark').value;
+            var sendtime =new Date().toUTCString() ;
+            if (meterid.length != 8) {
+                document.getElementById('errMsg').innerHTML = "<p>表号长度输入错误！</p>"
+                return false;
+            }
+            if (code == '') {
+                document.getElementById('errMsg').innerHTML = "<p>任务编号不能为空！</p>"
+                return false;
+            }
+            if(sendby == ''){
+                document.getElementById('errMsg').innerHTML = "<p>发送人不能为空！</p>"
+                return false;
+            }
+            var parse1 = meterid.slice(0, 2);
+            var parse2 = meterid.slice(2, 4);
+            var parse3 = meterid.slice(4, 6);
+            var parse4 = meterid.slice(6, 8);
+            var commandSend = 'FE FE FE FE ' + parse4 + ' ' + parse3 + ' ' + parse2 + ' ' + parse1 + ' ' + '00 11 11 01 03 1F 90 12 82 16';
+            var data = {};
+            data.commandSend = commandSend;
+            data.code = code;
+            data.meterid = meterid;
+            data.sendby=sendby;
+            data.type=type;
+            data.remark=remark;
+            data.sendtime=sendtime;
+            document.write('抄表，命令为' + commandSend);
+            command.emit('meterReading', data,function(){
+                if(err) alert('命令发送出错');
+                else alert('命令已发送！');
+            });
+
+        }
+        function setInfo(){
+             var time = document.getElementById('time').value;
+            var frequency = document.getElementById('frequency').value;
+            if (time == '') {
+                document.getElementById('errMsg').innerHTML = "<p>时间不能为空！</p>"
+                return false;
+            }
+            if (frequency == '') {
+                document.getElementById('errMsg').innerHTML = "<p>次数不能为空！</p>"
+                return false;
+            }
+            alert('设置成功!时间间隔:'+time+'秒，次数'+frequency+'次');
+            var setinfo={};
+            setinfo.time=time;
+            setinfo.frequency=frequency;
+            command.emit('setInfo',setinfo);
+        }
+    </script>
+</head>
+<body>
+<div id="body" class="container center-block"  >
+    <div class="center-block">
+        <h2>抄表管理</h2>
+        <form>
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon">表&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+                            <input type="number" id="meterid" class="form-control"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon">任务编号：</span>
+                            <input type="number" id="code" class="form-control"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="input-group">
+                            <span class="input-group-addon">发&nbsp;&nbsp;送&nbsp;&nbsp;人：</span>
+                            <input type="text" id="sendby" class="form-control"/>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="input-group">
+                            <span class="input-group-addon">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>
+                            <input type="text" id="type" class="form-control" value="瑞纳热量表" disabled/>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+                            <input type="text" id="remark" class="form-control"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间：</span>
+                            <input type="text" id="sendtime" class="form-control"  disabled/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-info center-block" onclick="meterReading()">抄表</button>
+            <br>
+            <div id="errMsg" class="center-block" style="font-weight: bold"></div>
+            <br>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">间隔(秒)：</span>
+                <input type="number" id="time" class="form-control"/>
+            </div>
+            <br>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">次&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：</span>
+                <input type="number" id="frequency" class="form-control"/>
+            </div>
+            <br>
+            <br>
+            <button id="setting" class="btn btn-danger center-block" onclick="setInfo()">设置</button>
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+</body>
+</html>
