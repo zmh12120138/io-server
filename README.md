@@ -24,11 +24,7 @@ IO SERVER USING NODE.JS
 ### 系统模型简图
 
 *redis实现服务器间信息共享*
-```sequence
-命令服务器->redis缓存: 存储命令信息
-传输服务器->redis缓存: 读取命令信息
-传输服务器->Mysql数据库:存储数据
-```
+![enter image description here](http://chuantu.biz/t2/11/1438744468x-1566638895.png)
 ###系统模型详图
 ![enter image description here](http://chuantu.biz/t2/11/1438743158x-1566638895.png)
 ----------
