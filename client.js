@@ -2,7 +2,7 @@
 var net=require('net');
 var client=new net.Socket();
 client.setEncoding('utf8');
-client.connect(1337,'122.0.72.66',function(){
+client.connect(1337,'localhost',function(){
     console.log('已连接');
 });
 client.on('data',function(data){

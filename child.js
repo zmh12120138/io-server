@@ -17,8 +17,9 @@ function readcommand(){
                     sett.frequency=response.frequency;
                     process.send(sett);
                 });
-            }else{
-                
+            }
+            if(!response.status){
+                //不做任何操作
             }
         }
 
