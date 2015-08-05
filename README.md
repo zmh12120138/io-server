@@ -47,7 +47,47 @@ IO SERVER USING NODE.JS
 
 ----------
 ###**模块功能说明**
-暂未完成
+<table class="table table-bordered">
+<tr>
+     <td>模块名称</td>
+     <td>功能说明</td>
+</tr>
+     <td>servertcp.js</td>
+     <td>传输服务器，用来与客户端的连接及向客户端发送命令和接收数      据</td>
+ </tr>
+ <tr>
+     <td>server-command.js</td>
+     <td>命令服务器，发送抄表命令</td>
+ </tr>
+<tr>
+     <td>client.js</td>
+     <td>用Javascript写的TCP客户端，只作测试用</td>
+ </tr>
+ <tr>
+     <td>child.js</td>
+     <td>servertcp的子进程，用来监控redis缓存</td>
+ </tr>
+ <tr>
+     <td>savedata.js</td>
+     <td>servertcp的子进程，用于数据操作，从redis中读取原始数据经过加工后存入数据库</td>
+ </tr>
+ <tr>
+     <td>sendMail.js</td>
+     <td>发送邮件模块</td>
+ </tr>
+ <tr>
+     <td>settings.js</td>
+     <td>保存配置信息的模块，包括mysql，redis，nodemailer模块的配置</td>
+ </tr>
+ <tr>
+     <td>testservertcp.js</td>
+     <td>用于测试</td>
+ </tr>
+ <tr>
+     <td>command.html</td>
+     <td>命令服务器的客户端</td>
+ </tr>
+ </table>
 
 ----------
 ###**服务器压力测试记录**
@@ -74,11 +114,13 @@ IO SERVER USING NODE.JS
 
 一万个并发连接：
 ![enter image description here](http://chuantu.biz/t2/11/1438746212x-1566638176.png)
+
 三万个并发连接：
 ![enter image description here](http://chuantu.biz/t2/11/1438746249x-1566638176.png)
+
 五万个并发连接：
 ![enter image description here](http://chuantu.biz/t2/11/1438746285x-1566638176.png)
-<table >
+<table class="table table-bordered table-striped" >
    <tr>
       <td>并发数量</td>
       <td>占用内存</td>
