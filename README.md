@@ -1,18 +1,6 @@
 IO SERVER USING NODE.JS
 ===================
-
-**contents:**
--------------
- 1. 使用说明
- 2. 系统模型简图
- 3. 系统模型详图
- 4. 变量命名规则
- 5. 模块功能说明
- 6. 系统压力测试记录
-
-
-----------
-###**使用说明**
+###使用说明
  **一.bat批处理脚本开启服务器使用注意事项：**
  1.需将文件夹重新命名为“io-server”；
  2.需将文件夹放置C盘根目录下。
@@ -33,81 +21,12 @@ IO SERVER USING NODE.JS
  4.打开任务管理器，找到所有的Node进程并结束进程。
  5.一定要注意关闭的顺序。
 
-### **系统模型简图**
+### 系统模型简图
 
 *redis实现服务器间信息共享*
 ![enter image description here](http://chuantu.biz/t2/11/1438744468x-1566638895.png)
-
-###**系统模型详图**
+###系统模型详图
 ![enter image description here](http://chuantu.biz/t2/11/1438743158x-1566638895.png)
 ----------
-###**变量命名规则**
+###变量命名规则
 暂未完成
-
-
-----------
-###**模块功能说明**
-暂未完成
-
-----------
-###**服务器压力测试记录**
-测试工具：ServerTestTool
-软件截图：![enter image description here](http://chuantu.biz/t2/11/1438745733x-1566638176.png)
-
-**测试记录一(低配电脑)**
-
-系统环境：
- - Cpu: 1.0GHZ Intel(R) Xeon(R) 
- - 内存速度: 800MHZ
- - 系统:windows 7 企业版 32位
-
-测试结果：
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;并发20000个连接以内，与服务器连接的速度很快，20000之后速度明显下降。
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内存使用情况：服务器接受20000个连接所占用内存为400MB±50MB，平均每个连接占用20k内存。
-
-**测试记录二(高配电脑)**
-
-系统环境：
-![enter image description here](http://chuantu.biz/t2/11/1438746090x-1566638176.png)
-
-测试结果：
-
-一万个并发连接：
-![enter image description here](http://chuantu.biz/t2/11/1438746212x-1566638176.png)
-三万个并发连接：
-![enter image description here](http://chuantu.biz/t2/11/1438746249x-1566638176.png)
-五万个并发连接：
-![enter image description here](http://chuantu.biz/t2/11/1438746285x-1566638176.png)
-<table >
-   <tr>
-      <td>并发数量</td>
-      <td>占用内存</td>
-      <td>每个连接所占内存</td>
-   </tr>
-   <tr>
-      <td>1万</td>
-      <td>73M</td>
-      <td>7K</td>
-   </tr>
-  <tr>
-      <td>2万</td>
-      <td>98.6M</td>
-      <td>5K</td>
-   </tr>
-   <tr>
-      <td>3万</td>
-      <td>121.1M</td>
-      <td>4.1K</td>
-   </tr>
-   <tr>
-      <td>4万</td>
-      <td>148M</td>
-      <td>3.8K</td>
-   </tr>
-   <tr>
-      <td>5万</td>
-      <td>172.9M</td>
-      <td>3.54K</td>
-   </tr>
-</table>
-2万个并发连接之前，服务器接受新连接速度很快；4万-5万个的时候，服务器接受新连接的速度大约每秒20个。
