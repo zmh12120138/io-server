@@ -17,7 +17,7 @@ server.on('connection',function(socket){
     socket.setNoDelay(true);      //设置无延时
     server.getConnections(function(err,count){
         console.log('当前连接数量:'+count);
-    });
+    });   //获取当前连接数量
     socket.on('data',function(data){
         var decode=data.toString('hex');
         var messageSend={};

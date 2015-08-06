@@ -25,6 +25,6 @@ exports.sendMail=function(data){
         if(error){
             return console.log(error);
         }
-        console.log('Message sent: ' + info.response);
+        console.log('邮件发送成功' + info.response +'  于'+new Date().toLocaleString() );
     });
 };
