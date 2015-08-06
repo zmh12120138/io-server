@@ -16,14 +16,15 @@ IO SERVER USING NODE.JS
  **一.bat批处理脚本开启服务器使用注意事项：**
  1.需将文件夹重新命名为“io-server”；
  2.需将文件夹放置C盘根目录下。
- 3.如果系统未运行过本程序，需先打开“XX系统首次使用时运行.bat”，再打开“start all.bat”;
+ 3.如果系统未运行过本程序，则在安装Node.js后打开“安装完成node后执行.bat”，再打开“start all.bat”;
  
  
  **二.手动开启服务器使用说明：**
- 1.打开文件夹里对应系统类型的redis文件夹，找到redis-server.exe并打开；
- 2.开启命令客户端：node server-command.js或者pm2 start server-command.js;
- 3.开启传输客户端：node servertcp.js或者pm2 start servertcp.js（建议使用后者）。
- 4.一定要注意开启的顺序
+ 1.第一次运行需先安装socket.io和pm2模块：打开命令窗口，切换至文件夹所在路径（cd c:\io-server）,首先安装socket.io(npm install socket.io),然后全局安装pm2(npm install -g pm2)
+ 2.打开文件夹里对应系统类型的redis文件夹，找到redis-server.exe并打开；
+ 3.开启命令客户端：node server-command.js或者pm2 start server-command.js;
+ 4.开启传输客户端：node servertcp.js或者pm2 start servertcp.js（建议使用后者）。
+ 5.一定要注意开启的顺序
  
  
  **三.关闭所有服务操作说明：**
