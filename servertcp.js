@@ -21,7 +21,7 @@ server.on('connection',function(socket){
     socket.on('data',function(data){
         var decode=data.toString('hex');
         var messageSend={};
-        if(decode.length>25){
+        if(decode.length>50){
             client.lpush('originaldata',decode,function(err,response){
                 if(err) throw (err);
                 else{
