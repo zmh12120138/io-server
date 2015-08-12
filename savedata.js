@@ -17,6 +17,7 @@ function saveData(data) {
             if(err) throw(err);
             else{
                 console.log('收到数据:'+response);
+                client.expire('originaldata',60);  //设置缓存中该键值的过期时间为1分钟
                 connection.query('INSERT INTO originaldata SET ?', {originaldata: response, date: new Date()}, function (err, result) {
                     if (err)  throw (err);
                     else {
