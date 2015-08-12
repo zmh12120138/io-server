@@ -13,7 +13,7 @@ function saveData(data) {
     var llen = client.llen('originaldata');    //获取redis中originaldata列表的长度
 
     if (llen != 0) {
-        client.rpop('originaldata',function(err,response){
+        client.lpop('originaldata',function(err,response){
             if(err) throw(err);
             else{
                 console.log('收到数据:'+response);
